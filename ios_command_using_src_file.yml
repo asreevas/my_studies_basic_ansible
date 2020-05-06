@@ -1,0 +1,32 @@
+---
+-
+ connection: local
+ gather_facts: false
+ hosts: netdevops_IOS
+ name: "Get ARP information"
+ 
+ vars:
+  ios_provider:
+    username: developer
+    password: C1sco12345        
+
+ tasks:
+   - name: "show multiple commands"
+     ios_config:
+       provider: "{{ ios_provider }}"
+       lines:
+        - ip address 9.9.9.9 255.255.255.255
+       parents: interface loopback 99
+
+     register: print_output
+   - debug: var=print_output
+
+   - name: "show multiple commands"
+     ios_config:
+       provider: "{{ ios_provider }}"
+       src: "/etc/ansible/loopback1111.cfg"   
+
+     register: print_output
+
+   - debug: var=print_output
+
